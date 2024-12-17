@@ -20,15 +20,15 @@ const makeCommit = (n) => {
     return;
   }
 
-  // Generate random position for recent contributions (last 2 weeks)
-  const x = random.int(0, 1);  // Last 2 weeks
-  const y = random.int(0, 6);  // 7 days in a week
+  // Generate random position for contributions (last 12 months)
+  const x = random.int(0, 51);  // 52 weeks in a year
+  const y = random.int(0, 6);   // 7 days in a week
   
-  // Calculate date for recent contributions
+  // Calculate date for the last 12 months
   const DATE = moment()
-    .subtract(2, 'weeks')
-    .add(x, 'weeks')             // Add up to 2 weeks
-    .add(y, 'days')              // Add days within the week
+    .subtract(1, 'year')         // Start from 1 year ago
+    .add(x, 'weeks')            // Add weeks (0-51)
+    .add(y, 'days')             // Add days within the week
     .set('hour', random.int(9, 17))    // Random work hour (9 AM to 5 PM)
     .set('minute', random.int(0, 59))
     .set('second', random.int(0, 59))
@@ -74,6 +74,6 @@ const initRepo = async () => {
 
 // Start the process
 initRepo().then(() => {
-  // Make 20-30 commits spread across 2 weeks
-  makeCommit(random.int(20, 30));
+  // Make 500-700 commits spread across 12 months (roughly 2-3 commits per workday)
+  makeCommit(random.int(500, 700));
 });
